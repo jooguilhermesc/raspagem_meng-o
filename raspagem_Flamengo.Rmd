@@ -1,0 +1,72 @@
+```{r}
+library(stringr)
+library(twitteR)
+library(purrr)
+library(tidytext)
+library(dplyr)
+library(tidyr)
+library(lubridate)
+library(scales)
+library(broom)
+library(ggplot2)
+library(tm)
+library(wordcloud)
+library(RColorBrewer)
+```
+
+```{r}
+consumerKey = "U8WWjtS2fRxrygwsiuNDMTukn"
+consumerSecret = "iwxlfyqw4GrWsVWVXYv25wIl2iAuxdVBWzANJ92NNVzVt0oZcK"
+accessToken = "2323412245-ByHQuObVnXqhilYcXaErSB0c8I6IIXAhel6B24Q"
+accessSecret = "16FXQPyQTDZeP3YABEOiEOY2fb47L4anK3bQfe9lgkW8V"
+options(httr_oauth_cache=TRUE)
+
+setup_twitter_oauth(consumer_key = consumerKey, consumer_secret = consumerSecret,
+access_token = accessToken, access_secret = accessSecret)
+```
+
+```{r}
+tweets_raspados = userTimeline("ztfeelings", n = 3200)
+tweets_df <- tibble::as_tibble(map_df(tweets_raspados, as.data.frame))
+write.csv(tweets_df, "ztfeelings_tweets.csv")
+```
+Esse é um teste nos meus próprios tweets, não deve ser levado em consideração, mas fica de exemplo, para estudo
+```{r}
+summary(tweets_df)
+print(tweets_df$text)
+```
+
+```{r}
+flamengo_tweets <- userTimeline("Flamengo", n=3200)
+flamengo_df <- tibble::as_tibble(map_df(flamengo_tweets, as.data.frame))
+write.csv(flamengo_df, "flamengo_tweets.csv")
+```
+
+```{r}
+print(flamengo_df$text[1:10])
+```
+
+```{r}
+tweetstoflamengo <- searchTwitter("@Flamengo exclude:retweets", n=3200)
+tweetstoflamengo_df <- tbl_df(map_df(tweetstoflamengo, as.data.frame))
+write.csv(tweetstoflamengo_df, "Mentions_Flamengo.csv")
+```
+
+```{r}
+summary(tweetstoflamengo_df$created)
+```
+
+```{r}
+corpus <- VCorpus(VectorSource(tweetstoflamengo_df$text), readerControl = list(reader=readPlain, language = "eng"))
+
+corpus = tm_map(corpus, removeWords, stopwords("portuguese"))
+corpus = tm_map(corpus, stripWhitespace)
+corpus = tm_map(corpus, removePunctuation)
+corpus = tm_map(corpus, removeNumbers)
+```
+
+```{r}
+wordcloud(corpus, max.words = 50, random.order = T, colors = rainbow(8), rot.per = 0.5, use.r.layout = T)
+```
+
+
