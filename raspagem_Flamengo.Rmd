@@ -26,17 +26,6 @@ access_token = accessToken, access_secret = accessSecret)
 ```
 
 ```{r}
-tweets_raspados = userTimeline("ztfeelings", n = 3200)
-tweets_df <- tibble::as_tibble(map_df(tweets_raspados, as.data.frame))
-write.csv(tweets_df, "ztfeelings_tweets.csv")
-```
-Esse é um teste nos meus próprios tweets, não deve ser levado em consideração, mas fica de exemplo, para estudo
-```{r}
-summary(tweets_df)
-print(tweets_df$text)
-```
-
-```{r}
 flamengo_tweets <- userTimeline("Flamengo", n=3200)
 flamengo_df <- tibble::as_tibble(map_df(flamengo_tweets, as.data.frame))
 write.csv(flamengo_df, "flamengo_tweets.csv")
