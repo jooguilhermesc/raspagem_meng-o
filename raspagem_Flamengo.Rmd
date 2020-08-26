@@ -15,10 +15,10 @@ library(RColorBrewer)
 ```
 
 ```{r}
-consumerKey = "U8WWjtS2fRxrygwsiuNDMTukn"
-consumerSecret = "iwxlfyqw4GrWsVWVXYv25wIl2iAuxdVBWzANJ92NNVzVt0oZcK"
-accessToken = "2323412245-ByHQuObVnXqhilYcXaErSB0c8I6IIXAhel6B24Q"
-accessSecret = "16FXQPyQTDZeP3YABEOiEOY2fb47L4anK3bQfe9lgkW8V"
+consumerKey = "INSERT KEY HERE"
+consumerSecret = "INSERT SECRET KEY HERE"
+accessToken = "INSERT TOKEN HERE"
+accessSecret = "INSERT SECRET TOKEN HERE"
 options(httr_oauth_cache=TRUE)
 
 setup_twitter_oauth(consumer_key = consumerKey, consumer_secret = consumerSecret,
