@@ -26,16 +26,6 @@ access_token = accessToken, access_secret = accessSecret)
 ```
 
 ```{r}
-flamengo_tweets <- userTimeline("Flamengo", n=3200)
-flamengo_df <- tibble::as_tibble(map_df(flamengo_tweets, as.data.frame))
-write.csv(flamengo_df, "flamengo_tweets.csv")
-```
-
-```{r}
-print(flamengo_df$text[1:10])
-```
-
-```{r}
 tweetstoflamengo <- searchTwitter("@Flamengo exclude:retweets", n=3200)
 tweetstoflamengo_df <- tbl_df(map_df(tweetstoflamengo, as.data.frame))
 write.csv(tweetstoflamengo_df, "Mentions_Flamengo.csv")
